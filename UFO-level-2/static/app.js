@@ -33,8 +33,10 @@ filter.on("click", function(){
 
     // get the datetime filter
     var datetime = d3.select("#datetime").property("value");
+    var city = d3.select(".custom-select").property("value");
 
-    console.log(`filter clicked datetime ${datetime}`);  
+    console.log(`filter clicked datetime ${datetime}`);
+    console.log(`filter clicked city ${city}`);    
 
     // remove existing table rows and table data, except the header
     d3.selectAll("#ufo-table>tbody>tr").remove();

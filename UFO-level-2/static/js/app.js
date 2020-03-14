@@ -1,6 +1,18 @@
 // from data.js
 var tableData = data;
 
+// get the distinct cities from the data so we can build a city drop down select list
+//https://codeburst.io/javascript-array-distinct-5edc93501dc4
+const distinctCities = [...new Set(tableData.map(x => x.city))];
+
+// add the distinct city list to the select list
+distinctCities.forEach(function(data) {
+	// create the drop down menu of cities
+	var selector = d3.select(".custom-select")
+        .append("option")
+		.text(data)
+    });
+
 // LOAD ALL DATA 
 var all = d3.select("#all-btn");
 
@@ -32,22 +44,40 @@ filter.on("click", function(){
     console.log(`Filter clicked `);
 
     // get the datetime filter
-    var datetime = d3.select("#datetime").property("value");
-
-    console.log(`filter clicked datetime ${datetime}`);  
+    let datetime = d3.select("#datetime").property("value");
+    let city = d3.select(".custom-select").property("value");
 
     // remove existing table rows and table data, except the header
     d3.selectAll("#ufo-table>tbody>tr").remove();
     d3.selectAll("#ufo-table>tbody>td").remove();    
 
-    // filter the tableData based on the datetime filter
-    // single filter source reference
-    // https://www.javascripttutorial.net/javascript-array-filter/
-    var filteredData = tableData.filter(function (e) {
-        return e.datetime = datetime;
-        });
+    let filters={};
 
-            // select the table body
+    if (datetime ) {
+        console.log(`filter clicked datetime ${datetime}`);
+        filters.datetime = datetime;
+    }
+    if(city ){
+        console.log(`filter clicked city ${city}`); 
+        filters.city = city;
+    }
+
+    console.log(`filters datetime ${filters.datetime}`); 
+    console.log(`filters city ${filters.city}`); 
+
+    // multiple values source reference
+    //https://stackoverflow.com/questions/18719383/how-to-filter-an-array-object-by-checking-multiple-values
+    let filteredData= tableData.filter(item => {
+        for (let key in filters) {
+          if (item[key] === undefined || item[key] != filters[key])
+            return false;
+        }
+        return true;
+      });  
+
+    console.log(filteredData);
+
+    // select the table body
     var filterDisplay = d3.select("#ufo-table>tbody");
 
     // append the filtered data to the table body
