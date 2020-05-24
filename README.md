@@ -1,8 +1,10 @@
-# JavaScript and DOM Manipulation
+# Web Development with JavaScript and DOM Manipulation
 
 ## Background
 
 Built a web site that will create a table dynamically based upon [Sightings](DO_NOT_GRADE/StarterCode/static/js/data.js). The site allows our users to filter the data for specific values. There's a catch though... we only use pure JavaScript, HTML, and CSS, and D3.js on our web pages. 
+
+![NASA](Images/nasa.jpg)
 
 ### Technologies
 
